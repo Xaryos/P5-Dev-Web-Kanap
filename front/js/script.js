@@ -17,7 +17,8 @@ function getProducts() {
         .catch((err) => {
             let itemsContainer = document.querySelector("#items");
             itemsContainer.innerHTML =
-            "Les items n'ont pas pu être chargés correctement" + err;
+            "Les items n'ont pas pu être chargés correctement";
+            console.log(err);
         })
 
 
@@ -36,7 +37,7 @@ function getProducts() {
                 productLink.href=`./product.html?id=${donnéesApi[article]._id}`;
 
                 let productArticle = document.createElement("article");
-                masterContainer.appendChild(productArticle);
+                productLink.appendChild(productArticle);
 
                 let productImage = document.createElement("img");
                 productArticle.appendChild(productImage);
@@ -52,6 +53,7 @@ function getProducts() {
                 productArticle.appendChild(productDescription);
                 productDescription.classList.add("productDescription")
                 productDescription.innerHTML = donnéesApi[article].description;
+            
             }
-        })
+})
 }
