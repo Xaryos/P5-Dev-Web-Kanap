@@ -3,6 +3,8 @@ let itemBackup = JSON.parse(localStorage.getItem("itemInCart"));
 
         console.log(itemBackup);
 
+
+
 // condition vérification item dans le panier.
 if (localStorage.getItem("itemInCart") === null) {
     
@@ -21,7 +23,7 @@ else {
     // initialisation des items sur la page panier  
 
 async function Test() {
-    await fetch(`http://localhost:3000/api/products/${itemBackup}`)
+    await fetch(`http://localhost:3000/api/products`)
     .then(function(res){
         return res.json();
     })
@@ -30,18 +32,17 @@ async function Test() {
     })
 }
 
-    for (let article in itemBackup) {
-        
-        Test();
+    for (let article of itemBackup) {
 
         let masterSection = document.querySelector('#cart__items'); 
     
         let productArticle = document.createElement("article");
         masterSection.appendChild(productArticle);
         productArticle.classList.add("cart__item");
-        productArticle.dataset.id = `${itemBackup[article].idProduct}`;
-        productArticle.dataset.color =`${itemBackup[article].colorProduct}`;
+        productArticle.dataset.id = `${article.idProduct}`;
+        productArticle.dataset.color =`${article.colorProduct}`;
         
+        Test(productArticle.idProduct);
             // image
             let divImage = document.createElement("div");
             productArticle.appendChild(divImage);
@@ -49,8 +50,8 @@ async function Test() {
     
             let productImage = document.createElement("img");
             divImage.appendChild(productImage);
-            productImage.src = itemBackup[article].imgProduct;
-            productImage.alt = itemBackup[article].altProduct;
+            productImage.src = article.imgProduct;
+            productImage.alt = article.altProduct;
     
         //content
         let divContent = document.createElement("div");
@@ -64,15 +65,15 @@ async function Test() {
     
             let productTitle = document.createElement("h2");
             divContentDescription.appendChild(productTitle);
-            productTitle.innerHTML = itemBackup[article].nameProduct;
+            productTitle.innerHTML = article.nameProduct;
     
             let productColor = document.createElement("p");
             divContentDescription.appendChild(productColor);
-            productColor.innerHTML = itemBackup[article].colorProduct;
+            productColor.innerHTML = article.colorProduct;
     
             let productPrice = document.createElement("p");
             divContentDescription.appendChild(productPrice);
-            productPrice.innerHTML = `${itemBackup[article].priceProduct}€`;
+            productPrice.innerHTML = `${article.priceProduct}€`;
     
         let divSettings = document.createElement("div");
         divContent.appendChild(divSettings);
@@ -85,7 +86,7 @@ async function Test() {
     
             let quantityParagraph = document.createElement("p");
             divSettingsQuantity.appendChild(quantityParagraph);
-            quantityParagraph.innerHTML = itemBackup[article].quantityProduct;
+            quantityParagraph.innerHTML = article.quantityProduct;
             quantityParagraph.innerText = "Qté : ";
     
             let quantityInput = document.createElement("input");
@@ -95,7 +96,7 @@ async function Test() {
             quantityInput.name = 'itemQuantity';
             quantityInput.min = 1;
             quantityInput.max = 100;
-            quantityInput.value = itemBackup[article].quantityProduct;
+            quantityInput.value = article.quantityProduct;
     
         //delet button
         let divDeletButton = document.createElement("div");

@@ -130,13 +130,13 @@ console.log("test");
                             // création de la boite
 
                             let boxProduct = {
-                                nameProduct : nameProduct,
-                                quantityProduct : quantityProduct,
-                                colorProduct : colorProduct,
-                                imgProduct : imgProduct,
-                                altProduct : altProduct,
-                                priceProduct : priceProduct,
-                                idProduct : idProduct
+                                nameProduct,
+                                quantityProduct,
+                                colorProduct,
+                                imgProduct,
+                                altProduct,
+                                priceProduct,
+                                idProduct
                             };
 
                                 // intégration de la boite dans le LS
