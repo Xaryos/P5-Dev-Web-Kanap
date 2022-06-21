@@ -1,10 +1,10 @@
  // récupération array product
-let itemBackup = JSON.parse(localStorage.getItem("itemGet"));
+let itemBackup = JSON.parse(localStorage.getItem("itemInCart"));
 
         console.log(itemBackup);
 
 // condition vérification item dans le panier.
-if (localStorage.getItem("itemGet") === null) {
+if (localStorage.getItem("itemInCart") === null) {
     
         //message d'erreur
         let masterSectionError = document.getElementById("cart__items")
@@ -19,16 +19,28 @@ if (localStorage.getItem("itemGet") === null) {
 }
 else {
     // initialisation des items sur la page panier  
-   
+
+async function Test() {
+    await fetch(`http://localhost:3000/api/products/${itemBackup}`)
+    .then(function(res){
+        return res.json();
+    })
+    .then (function (itemAPI) {
+        product = itemAPI;
+    })
+}
+
     for (let article in itemBackup) {
+        
+        Test();
 
         let masterSection = document.querySelector('#cart__items'); 
     
         let productArticle = document.createElement("article");
         masterSection.appendChild(productArticle);
         productArticle.classList.add("cart__item");
-        productArticle.dataset.id = `${itemBackup[article]._id}`;
-        productArticle.dataset.color =`${itemBackup[article].color}`;
+        productArticle.dataset.id = `${itemBackup[article].idProduct}`;
+        productArticle.dataset.color =`${itemBackup[article].colorProduct}`;
         
             // image
             let divImage = document.createElement("div");
@@ -37,8 +49,8 @@ else {
     
             let productImage = document.createElement("img");
             divImage.appendChild(productImage);
-            productImage.src = itemBackup[article].image;
-            productImage.alt = itemBackup[article].altTxt;
+            productImage.src = itemBackup[article].imgProduct;
+            productImage.alt = itemBackup[article].altProduct;
     
         //content
         let divContent = document.createElement("div");
@@ -52,15 +64,15 @@ else {
     
             let productTitle = document.createElement("h2");
             divContentDescription.appendChild(productTitle);
-            productTitle.innerHTML = itemBackup[article].name;
+            productTitle.innerHTML = itemBackup[article].nameProduct;
     
             let productColor = document.createElement("p");
             divContentDescription.appendChild(productColor);
-            productColor.innerHTML = itemBackup[article].color;
+            productColor.innerHTML = itemBackup[article].colorProduct;
     
             let productPrice = document.createElement("p");
             divContentDescription.appendChild(productPrice);
-            productPrice.innerHTML = `${itemBackup[article].price}€`;
+            productPrice.innerHTML = `${itemBackup[article].priceProduct}€`;
     
         let divSettings = document.createElement("div");
         divContent.appendChild(divSettings);
@@ -73,7 +85,7 @@ else {
     
             let quantityParagraph = document.createElement("p");
             divSettingsQuantity.appendChild(quantityParagraph);
-            quantityParagraph.innerHTML = itemBackup[article].quantity;
+            quantityParagraph.innerHTML = itemBackup[article].quantityProduct;
             quantityParagraph.innerText = "Qté : ";
     
             let quantityInput = document.createElement("input");
@@ -83,7 +95,7 @@ else {
             quantityInput.name = 'itemQuantity';
             quantityInput.min = 1;
             quantityInput.max = 100;
-            quantityInput.value = itemBackup[article].quantity;
+            quantityInput.value = itemBackup[article].quantityProduct;
     
         //delet button
         let divDeletButton = document.createElement("div");
@@ -109,9 +121,12 @@ else {
         });
     
         // suppression d'Item
-        let deleteButton = document.querySelector(".deleteItem");
+        let deleteButton = document.querySelector('p.deleteItem');
+
+        
         deleteButton.addEventListener('click', function() {
-    
+        
+            
             // modification DOM 
             let masterSection = document.getElementById("cart__items");
             masterSection.removeChild(productArticle);
@@ -121,7 +136,31 @@ else {
             window.localStorage.clear();
             location.reload();
     
-        });
-        }
-   };
+        
+        })
+
+         //  check pour  verification d'id + color
+        
+    //      let select = document.querySelectorAll('#colors');
+
+    //      let product =  
+    //      let addItem = localStorage.getItem("itemInCart");
+    
+    //      for (let i=0; i < product.lenght; i++) {
+            
+    //     if (addItem[i]._id == product._id && addItem[i].color == select.value) {
+    //              localStorage.getItem("itemInCart");
+    // //         // ajouter la quantité de l'item a la quantité actuelle du produit
+            
+    //         addItem[i].quantity++;
+
+            
+    //         // JSON.parse(localStorage.getItem("itemInCart"));
+    //         localStorage.setItem("itemInCart", JSON.stringify(addItem));
+    // //         console.log("test");
+
+    //      }
+    //  }
+    }
+};
 
