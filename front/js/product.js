@@ -84,7 +84,7 @@ AddToCart();
 
    addToCartBtn.addEventListener("click", () => {
 
-console.log("test");
+
 
         // definitions des objets 
         let quantityPick = document.querySelector("#quantity");
@@ -133,9 +133,9 @@ console.log("test");
                                 nameProduct,
                                 quantityProduct,
                                 colorProduct,
-                                imgProduct,
+                                imgProduct : imgProduct,
                                 altProduct,
-                                priceProduct,
+                                // priceProduct : priceProduct,
                                 idProduct
                             };
 
@@ -155,24 +155,26 @@ console.log("test2");
                      // definitions des objets 
                     let quantityPick = document.querySelector("#quantity");
                     let ColorPick = document.querySelector("#colors");
+                    
 
                     let idProduct = idItems;
                     let colorProduct = ColorPick.value;
                     let quantityProduct = quantityPick.value;
-                    let nameProduct = document.querySelector("#title").textContent;
-                    let imgProduct = product.scr;
+                    let nameProduct = document.querySelector("#title").textContent;  
+                    let imgProduct = product.src;
                     let altProduct = product.alt;
                     let priceProduct = document.querySelector("#price");
 
                     let boxProduct = {
-                        nameProduct : nameProduct,
-                        quantityProduct : quantityProduct,
-                        colorProduct : colorProduct,
+                        nameProduct,
+                        quantityProduct,
+                        colorProduct,
                         imgProduct : imgProduct,
-                        altProduct : altProduct,
-                        priceProduct : priceProduct,
-                        idProduct : idProduct
+                        altProduct,
+                        // priceProduct : priceProduct,
+                        idProduct
                     };
+
 
                     // intégration de la boite dans le LS
 

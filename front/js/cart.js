@@ -1,12 +1,13 @@
  // récupération array product
-let itemBackup = JSON.parse(localStorage.getItem("itemInCart"));
 
-        console.log(itemBackup);
+    let itemBackup = JSON.parse(localStorage.getItem("itemInCart"));
+
+    console.log(itemBackup);
 
 
 
 // condition vérification item dans le panier.
-if (localStorage.getItem("itemInCart") === null) {
+if (itemBackup === null) {
     
         //message d'erreur
         let masterSectionError = document.getElementById("cart__items")
@@ -20,20 +21,20 @@ if (localStorage.getItem("itemInCart") === null) {
 
 }
 else {
-    // initialisation des items sur la page panier  
+    for (article of itemBackup) {
+        for(let w = 0; w < itemBackup.length; w++) {
+        function Test() {
+            fetch(`http://localhost:3000/api/products/${article.idProduct}`)
+           .then(function(res){return res.json()})
+           
+    
+           .then(function (dataProduct) {
+               product = dataProduct;
+               console.log(product);
+    
+               
 
-async function Test() {
-    await fetch(`http://localhost:3000/api/products`)
-    .then(function(res){
-        return res.json();
-    })
-    .then (function (itemAPI) {
-        product = itemAPI;
-    })
-}
-
-    for (let article of itemBackup) {
-
+    
         let masterSection = document.querySelector('#cart__items'); 
     
         let productArticle = document.createElement("article");
@@ -42,7 +43,6 @@ async function Test() {
         productArticle.dataset.id = `${article.idProduct}`;
         productArticle.dataset.color =`${article.colorProduct}`;
         
-        Test(productArticle.idProduct);
             // image
             let divImage = document.createElement("div");
             productArticle.appendChild(divImage);
@@ -50,8 +50,8 @@ async function Test() {
     
             let productImage = document.createElement("img");
             divImage.appendChild(productImage);
-            productImage.src = article.imgProduct;
-            productImage.alt = article.altProduct;
+            productImage.src = product.imageUrl;
+            productImage.alt = product.altTxt;
     
         //content
         let divContent = document.createElement("div");
@@ -73,7 +73,7 @@ async function Test() {
     
             let productPrice = document.createElement("p");
             divContentDescription.appendChild(productPrice);
-            productPrice.innerHTML = `${article.priceProduct}€`;
+            productPrice.innerHTML = `${product.price}€`;
     
         let divSettings = document.createElement("div");
         divContent.appendChild(divSettings);
@@ -108,6 +108,8 @@ async function Test() {
             deletButtonParagraph.classList.add("deleteItem");
             deletButtonParagraph.innerHTML = "Supprimer";
     
+    
+        
         // modification quantité
         let quantityUpdate = document.querySelector(".itemQuantity");
     
@@ -123,7 +125,7 @@ async function Test() {
     
         // suppression d'Item
         let deleteButton = document.querySelector('p.deleteItem');
-
+    
         
         deleteButton.addEventListener('click', function() {
         
@@ -138,30 +140,14 @@ async function Test() {
             location.reload();
     
         
-        })
-
-         //  check pour  verification d'id + color
-        
-    //      let select = document.querySelectorAll('#colors');
-
-    //      let product =  
-    //      let addItem = localStorage.getItem("itemInCart");
-    
-    //      for (let i=0; i < product.lenght; i++) {
-            
-    //     if (addItem[i]._id == product._id && addItem[i].color == select.value) {
-    //              localStorage.getItem("itemInCart");
-    // //         // ajouter la quantité de l'item a la quantité actuelle du produit
-            
-    //         addItem[i].quantity++;
-
-            
-    //         // JSON.parse(localStorage.getItem("itemInCart"));
-    //         localStorage.setItem("itemInCart", JSON.stringify(addItem));
-    // //         console.log("test");
-
-    //      }
-    //  }
+      })
     }
-};
+    )};
+   };
+   
+    }
+Test();
+  };
+  
+
 
