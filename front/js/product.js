@@ -92,11 +92,9 @@ AddToCart();
 
         let idProduct = idItems;
         let colorProduct = ColorPick.value;
-        let quantityProduct = quantityPick.value;
         let nameProduct = document.querySelector("#title").textContent;
         let imgProduct = product.scr;
         let altProduct = product.alt;
-        let priceProduct = document.querySelector("#price");
 
         // condition : vérifications des champs bien rentrés
         if (quantityPick.value > 0 && quantityPick.value <100 && ColorPick.value !=0) {
@@ -131,7 +129,7 @@ AddToCart();
 
                             let boxProduct = {
                                 nameProduct,
-                                quantityProduct,
+                                quantityProduct : parseFloat(quantityPick.value),
                                 colorProduct,
                                 imgProduct : imgProduct,
                                 altProduct,
@@ -146,7 +144,7 @@ AddToCart();
                                 let storedProduct = JSON.stringify(arrayItems);
                                 localStorage.setItem("itemInCart", storedProduct);
                     };
-console.log("test2");
+
                 // condition: non présence dans le panier
                 } else {
 
@@ -159,19 +157,17 @@ console.log("test2");
 
                     let idProduct = idItems;
                     let colorProduct = ColorPick.value;
-                    let quantityProduct = quantityPick.value;
                     let nameProduct = document.querySelector("#title").textContent;  
                     let imgProduct = product.src;
                     let altProduct = product.alt;
-                    let priceProduct = document.querySelector("#price");
+        
 
                     let boxProduct = {
                         nameProduct,
-                        quantityProduct,
+                        quantityProduct : parseFloat(quantityPick.value),
                         colorProduct,
                         imgProduct : imgProduct,
                         altProduct,
-                        // priceProduct : priceProduct,
                         idProduct
                     };
 
@@ -186,7 +182,7 @@ console.log("test2");
 
                     
                 }
-console.log("test3");
+
                 // transport vers la page panier
                 cartLink();
                 function cartLink(){
