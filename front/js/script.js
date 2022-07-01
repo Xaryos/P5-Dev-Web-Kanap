@@ -1,59 +1,40 @@
-// Mise en place
-main();
-
-function main() {
-    getProducts();
-}
-
-// Récupération API
-
-function getProducts() {
-    fetch("http://localhost:3000/api/products")
-        .then(function(res){
-            console.log(res)
-            return res.json();
-        })
-// Message Erreur
-        .catch((err) => {
-            let itemsContainer = document.querySelector("#items");
-            itemsContainer.innerHTML =
-            "Les items n'ont pas pu être chargés correctement";
-            console.log(err);
-        })
-
 
 // Récupération données API
-
-        .then(function(donnéesApi) {
-            const articles = donnéesApi;
-            console.log(articles);
-
-// Mise en page des données            
-            for (let article in articles) {
-                let masterContainer = document.querySelector('.items');
-
-                let productLink = document.createElement("a");
-                masterContainer.appendChild(productLink);
-                productLink.href=`./product.html?id=${donnéesApi[article]._id}`;
-
-                let productArticle = document.createElement("article");
-                productLink.appendChild(productArticle);
-
-                let productImage = document.createElement("img");
-                productArticle.appendChild(productImage);
-                productImage.src = donnéesApi[article].imageUrl;
-                productImage.alt = donnéesApi[article].altTxt;
-
-                let productTitle = document.createElement('h3');
-                productArticle.appendChild(productTitle);
-                productTitle.classList.add("productName")
-                productTitle.innerHTML = donnéesApi[article].name;
-
-                let productDescription = document.createElement('p');
-                productArticle.appendChild(productDescription);
-                productDescription.classList.add("productDescription")
-                productDescription.innerHTML = donnéesApi[article].description;
-            
-            }
-})
-}
+fetch("http://localhost:3000/api/products")
+    .then(res => res.json())
+    .then( articles => {
+        console.log( articles )
+        createArticles( articles )
+    })
+    // Message Erreur
+    .catch((err) => {
+        console.log(err);
+        document.querySelector("#items").innerHTML ="Les items n'ont pas pu être chargés correctement";
+    })
+ 
+// Mise en page des données
+function createArticles(articles) {
+    for (let article of articles) {
+        let masterContainer = document.querySelector('.items');
+ 
+        let productLink = document.createElement("a");
+        masterContainer.appendChild(productLink);
+        productLink.href =`./product.html?id=${article._id}`;
+ 
+        let productArticle = document.createElement("article");
+        productLink.appendChild(productArticle);
+ 
+        let productImage = document.createElement("img");
+        productArticle.appendChild(productImage);
+        productImage.src = article.imageUrl;
+        productImage.alt = article.altTxt;
+ 
+        let productTitle = document.createElement('h3');
+        productArticle.appendChild(productTitle);
+        productTitle.innerHTML = article.name;
+ 
+        let productDescription = document.createElement('p');
+        productArticle.appendChild(productDescription);
+        productDescription.innerHTML = article.description;
+    }
+};
