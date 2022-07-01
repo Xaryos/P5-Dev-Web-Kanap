@@ -4,15 +4,15 @@ let idItems = window.location.search.split("?id=").join("");
 
 // initialisation 
 
-main();
+/*main();
 
 function main() {
     getProducts();
-}    
+}*/    
 
 // récupération produit
-async function getProducts() {
-   await fetch(`http://localhost:3000/api/products/${idItems}`)
+/*async function getProducts() {
+   await*/ fetch(`http://localhost:3000/api/products/${idItems}`)
         .then(function(res){
             console.log(res);
             return res.json();
@@ -62,13 +62,13 @@ async function getProducts() {
                     for (let i = 0; i < product.colors.length; i++) {
 
                         let colorSelection = document.createElement("option");
-                        colorSelection.value=`${product.colors[i]}`;
+                        colorSelection.value =`${product.colors[i]}`;
                         colorSelection.innerText = product.colors[i];
                         colorSlide.append(colorSelection);
                     
                     };
 }
-)};
+)//};
 
 
 
