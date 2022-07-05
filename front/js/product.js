@@ -1,18 +1,10 @@
 // récupération de l'id depuis le liens
 
 let idItems = window.location.search.split("?id=").join("");
-
-// initialisation 
-
-/*main();
-
-function main() {
-    getProducts();
-}*/    
+ 
 
 // récupération produit
-/*async function getProducts() {
-   await*/ fetch(`http://localhost:3000/api/products/${idItems}`)
+ fetch(`http://localhost:3000/api/products/${idItems}`)
         .then(function(res){
             console.log(res);
             return res.json();
@@ -90,11 +82,12 @@ AddToCart();
         let quantityPick = document.querySelector("#quantity");
         let ColorPick = document.querySelector("#colors");
 
-        let idProduct = idItems;
-        let colorProduct = ColorPick.value;
-        let nameProduct = document.querySelector("#title").textContent;
-        let imgProduct = product.scr;
-        let altProduct = product.alt;
+        let quantity = quantityPick.value;
+        let _id = idItems;
+        let color = ColorPick.value;
+        let name = document.querySelector("#title").textContent;
+        let imageUrl = product.scr;
+        let altTxt = product.alt;
 
         // condition : vérifications des champs bien rentrés
         if (quantityPick.value > 0 && quantityPick.value <100 && ColorPick.value !=0) {
@@ -108,16 +101,16 @@ AddToCart();
                     // vérification présence d'item
 
                 const productFinded = arrayItems.find(
-                    (el) => el.idProduct === idItems && el.colorProduct === colorProduct
+                    (el) => el._id === idItems && el.color === color
                     );
                 
                     // condition : si l'objet est trouvé 
                     if (productFinded) {
                         // definition de la variable de la nouvelle quantitée
-                        let updatedQuantity = parseInt(quantityProduct) + parseInt(productFinded.quantityProduct);
+                        let updatedQuantity = parseInt(quantity) + parseInt(productFinded.quantity);
                         
                         // ajout de la nouvelle quantitée au produit
-                        productFinded.quantityProduct = updatedQuantity;
+                        productFinded.quantity = updatedQuantity;
                         localStorage.setItem("itemInCart", JSON.stringify(arrayItems));
                     }
                     // condition : si l'objet n'est pas trouvé
@@ -128,13 +121,13 @@ AddToCart();
                             // création de la boite
 
                             let boxProduct = {
-                                nameProduct,
-                                quantityProduct : parseFloat(quantityPick.value),
-                                colorProduct,
-                                imgProduct : imgProduct,
-                                altProduct,
-                                // priceProduct : priceProduct,
-                                idProduct
+                                name,
+                                quantity : parseFloat(quantityPick.value),
+                                color,
+                                imageUrl : imageUrl,
+                                altTxt,
+                                // price : price,
+                                _id
                             };
 
                                 // intégration de la boite dans le LS
@@ -155,20 +148,20 @@ AddToCart();
                     let ColorPick = document.querySelector("#colors");
                     
 
-                    let idProduct = idItems;
-                    let colorProduct = ColorPick.value;
-                    let nameProduct = document.querySelector("#title").textContent;  
-                    let imgProduct = product.src;
-                    let altProduct = product.alt;
+                    let _id = idItems;
+                    let color = ColorPick.value;
+                    let name = document.querySelector("#title").textContent;  
+                    let imageUrl = product.src;
+                    let altTxt = product.alt;
         
 
                     let boxProduct = {
-                        nameProduct,
-                        quantityProduct : parseFloat(quantityPick.value),
-                        colorProduct,
-                        imgProduct : imgProduct,
-                        altProduct,
-                        idProduct
+                        name,
+                        quantity : parseFloat(quantityPick.value),
+                        color,
+                        imageUrl : imageUrl,
+                        altTxt,
+                        _id
                     };
 
 
