@@ -3,8 +3,7 @@
 fetch("http://localhost:3000/api/products")
     .then(res => res.json())
     .then( articles => {
-        console.log( articles )
-        createArticles( articles )
+        createArticles(articles)
     })
     // Message Erreur
     .catch((err) => {

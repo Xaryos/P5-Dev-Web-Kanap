@@ -109,16 +109,15 @@ console.log(itemBackup);
 /////////////////////////////////////////////////// FONCTIONS AUTRES ///////////////////////////////////////////////////////////////
 
 
-
                             // suppression d'Item
                                 // /!\ ajouter un element spécificateur
-                                deletButtonParagraph.addEventListener('click', (articleId) => {
+                                deletButtonParagraph.addEventListener('click', () => {
                    
                                     localStorage.clear();
                                     location.reload();
                                 
-                                
                                 }) 
+                                
 
                                     // affichage quantité dans le panier 
                             totalQuantityCart();
@@ -130,7 +129,7 @@ console.log(itemBackup);
                                 }
                                 let totalQuantity = document.querySelector("#totalQuantity")
                                 totalQuantity.innerText = result;
-}
+                                }
                                     // affichage prix dans le panier
                                 totalPrice();
     
