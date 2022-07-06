@@ -66,6 +66,7 @@ console.log(itemBackup);
                     
                             let productPrice = document.createElement("p");
                             divContentDescription.appendChild(productPrice);
+    /*  experimental*/      productPrice.classList.add("price");
                             productPrice.innerHTML = `${product.price}€`;
                     
                             let divSettings = document.createElement("div");
@@ -102,21 +103,54 @@ console.log(itemBackup);
                             divDeletButton.appendChild(deletButtonParagraph);
                             deletButtonParagraph.classList.add("deleteItem");
                             deletButtonParagraph.innerHTML = "Supprimer";
+
+
+
+/////////////////////////////////////////////////// FONCTIONS AUTRES ///////////////////////////////////////////////////////////////
+
+
+
+                            // suppression d'Item
+                                // /!\ ajouter un element spécificateur
+                                deletButtonParagraph.addEventListener('click', (articleId) => {
+                   
+                                    localStorage.clear();
+                                    location.reload();
+                                
+                                
+                                }) 
+
+                                    // affichage quantité dans le panier 
+                            totalQuantityCart();
+
+                            function totalQuantityCart () {
+                                let result = 0;
+                                for (const itemObject of itemBackup) {
+                                    result += itemObject.quantity;
+                                }
+                                let totalQuantity = document.querySelector("#totalQuantity")
+                                totalQuantity.innerText = result;
+}
+                                    // affichage prix dans le panier
+                                totalPrice();
+    
+                                function totalPrice() {
+                                    let result = 0;
+                                    let shownPrice = document.querySelector("#totalPrice");
+                                    for (const itemObject of itemBackup) {
+                                        result += itemObject.quantity * product.price;
+                                        
+                                    }
+                                    shownPrice.textContent = result;
+                                    
+                                }
                     });
                 
             }
             
-            // boucle qui inclu :
-                // titre
-                // image
-                // couleur
-                // prix
-                // quantity
-                /////////////////////////////////////
                 return itemObject;
             })
-                 
-            
+                    
         } else {
 
         let masterSectionError = document.getElementById("cart__items")
@@ -131,15 +165,9 @@ console.log(itemBackup);
         alert("Aucun produit n'est présent dans le panier");
     };
 
-// Tester method map 
-// essayer method pote de menthor (github)
 
-// Fractionner le code pour fonctionnement
+    // reste a faire : 
 
+                    // modification de la quantité
 
-let explodeButton = document.querySelector("#order");
-
-explodeButton.addEventListener("click", () => {
-
-    localStorage.clear();
-})
+                    // formulaire
