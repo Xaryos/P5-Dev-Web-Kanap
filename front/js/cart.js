@@ -111,12 +111,21 @@ console.log(itemBackup);
 
                             // suppression d'Item
                                 // /!\ ajouter un element spécificateur
-                                deletButtonParagraph.addEventListener('click', () => {
-                   
-                                    localStorage.clear();
-                                    location.reload();
+                                let suppressionBox = document.querySelectorAll("p.deleteItem");
+                                let suppressionButton = document.querySelectorAll(".deleteItem");
                                 
-                                }) 
+                                suppressionBox.forEach(suppressionButton => {
+                                    suppressionButton.addEventListener('click', () => {
+                   
+                                        console.log(itemObject._id);
+    
+                                        // location.reload();
+                                    
+                                    }) 
+                                });
+                                    
+                                
+                                
                                 
 
                                     // affichage quantité dans le panier 
