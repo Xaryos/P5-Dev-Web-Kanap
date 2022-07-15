@@ -110,24 +110,23 @@ console.log(itemBackup);
 
 
                             // suppression d'Item
-                                // /!\ ajouter un element spécificateur
-                                let suppressionBox = document.querySelectorAll("p.deleteItem");
-                                let suppressionButton = document.querySelectorAll(".deleteItem");
-                                
-                                suppressionBox.forEach(suppressionButton => {
-                                    suppressionButton.addEventListener('click', () => {
-                   
-                                        console.log(itemObject._id);
-    
-                                        // location.reload();
-                                    
-                                    }) 
-                                });
-                                    
-                                
-                                
-                                
 
+                                let btnDelete = document.querySelectorAll(".deleteItem");
+                                console.log(btnDelete);
+
+                                for (let i = 0; 1 < btnDelete.length; i++) {
+                                    btnDelete[i].addEventListener("click", (event)=> {
+                                        event.preventDefault();
+                                        
+                                        let idDelete = itemBackup[i]._id;  
+                                        let colorDelete = itemBackup[i].color;
+
+                                        itemBackup = itemBackup.filter((el) => el._id !== idDelete, el.color !== colorDelete);
+
+                                        localStorage.setItem("itemInCart", JSON.stringify(itemBackup));
+                                    });
+
+                                };
                                     // affichage quantité dans le panier 
                             totalQuantityCart();
 
