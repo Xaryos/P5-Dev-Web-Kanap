@@ -111,22 +111,26 @@ console.log(itemBackup);
 
                             // suppression d'Item
 
-                                let btnDelete = document.querySelectorAll(".deleteItem");
-                                console.log(btnDelete);
-
-                                for (let i = 0; 1 < btnDelete.length; i++) {
-                                    btnDelete[i].addEventListener("click", (event)=> {
-                                        event.preventDefault();
+                               
+                                const suppressButtons = document.querySelectorAll(".deleteItem");
+                                suppressButtons.forEach((button, i) => {
+                                    console.log(itemBackup[i].color);
+                                if (
+                                    itemBackup.find(
+                                    (item) =>
+                                        item.color === itemBackup[i].color && item._id === itemBackup[i]._id
                                         
-                                        let idDelete = itemBackup[i]._id;  
-                                        let colorDelete = itemBackup[i].color;
-
-                                        itemBackup = itemBackup.filter((el) => el._id !== idDelete, el.color !== colorDelete);
-
-                                        localStorage.setItem("itemInCart", JSON.stringify(itemBackup));
+                                    )
+                                   
+                                )  
+                                {
+                                    button.addEventListener("click", () => {
+                                        itemBackup = itemBackup.filter(el => el._id !== itemBackup[i]._id && el.color !== itemBackup[i].color);
+                                    updateCart(itemBackup);
                                     });
-
-                                };
+                                }
+                                });
+                            
                                     // affichage quantité dans le panier 
                             totalQuantityCart();
 
@@ -172,9 +176,12 @@ console.log(itemBackup);
         alert("Aucun produit n'est présent dans le panier");
     };
 
-
-    // reste a faire : 
-
-                    // modification de la quantité
-
-                    // formulaire
+    // mise a jour du panier 
+    function updateCart(itemBackup) {
+        if (itemBackup.length === 0) {
+          localStorage.removeItem("itemInCart");
+        } else {
+          localStorage.setItem("itemInCart", JSON.stringify(itemBackup));
+        }
+        location.reload();
+      }

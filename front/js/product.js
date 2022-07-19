@@ -3,9 +3,7 @@ let idItems = window.location.search.split("?id=").join("");
  
 // récupération produit
  fetch(`http://localhost:3000/api/products/${idItems}`)
-        .then(function(res){
-            return res.json();
-        })
+        .then(res => res.json())
 
         // Message Erreur
         .catch((err) => {
