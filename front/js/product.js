@@ -16,7 +16,6 @@ let idItems = window.location.search.split("?id=").join("");
         // Ajout produits 
         .then(function (itemAPI) {
             product = itemAPI;
-            console.log(product);
             
             // Récupération element HTML 
             let productDivImage = document.querySelector("div.item__img");
@@ -61,7 +60,7 @@ AddToCart();
         let quantityPick = document.querySelector("#quantity");
         let ColorPick = document.querySelector("#colors");
 
-        let quantity = quantityPick.value;
+        let quantity = +quantityPick.value;
         let _id = idItems;
         let color = ColorPick.value;
 
@@ -82,7 +81,7 @@ AddToCart();
                     // condition : si l'objet est trouvé 
                     if (productFinded) {
                         // definition de la variable de la nouvelle quantitée
-                        let updatedQuantity = parseInt(quantity) + parseInt(productFinded.quantity);
+                        let updatedQuantity = quantity + productFinded.quantity;
                         
                         // ajout de la nouvelle quantitée au produit
                         productFinded.quantity = updatedQuantity;

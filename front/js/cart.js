@@ -7,10 +7,13 @@ console.log(itemBackup);
     // condition de vérification de panier
     if (itemBackup) {  
         
-           
+             
 
         itemBackup.map((itemObject) => {
                 
+
+            
+
             const articleId = itemObject._id;
             const articleColor = itemObject.color;
             const articleQuantity = itemObject.quantity;
@@ -24,32 +27,31 @@ console.log(itemBackup);
                         
                         .then(function (dataProduct) {
                             product = dataProduct;
-                            console.log(product);
-                    // récupération de la section pour introduire les elements
-                    let mainSection = document.querySelector("#cart__items");
+                            // récupération de la section pour introduire les elements
+                            let mainSection = document.querySelector("#cart__items");
+                        
+                            // Article du produit
+                            let productArticle = document.createElement("article");
+                            mainSection.appendChild(productArticle);
+                            productArticle.classList.add("cart__item");
+                            productArticle.dataset.id = `${articleId}`;
+                            productArticle.dataset.color =`${articleColor}`;
                 
-                    // Article du produit
-                    let productArticle = document.createElement("article");
-                    mainSection.appendChild(productArticle);
-                    productArticle.classList.add("cart__item");
-                    productArticle.dataset.id = `${articleId}`;
-                    productArticle.dataset.color =`${articleColor}`;
-                
-                        // Image du produit
-                        let divImage = document.createElement("div");
-                        productArticle.appendChild(divImage);
-                        divImage.classList.add("cart__item__img");
+                            // Image du produit
+                            let divImage = document.createElement("div");
+                            productArticle.appendChild(divImage);
+                            divImage.classList.add("cart__item__img");
                 
                             let productImage = document.createElement("img");
                             divImage.appendChild(productImage);
                             productImage.src = product.imageUrl;
                             productImage.alt = product.altTxt;
                         
-                        // Contenu du produit
-                
-                        let divContent = document.createElement("div");
-                        productArticle.appendChild(divContent);
-                        divContent.classList.add("cart__item__content");
+                            // Contenu du produit
+                    
+                            let divContent = document.createElement("div");
+                            productArticle.appendChild(divContent);
+                            divContent.classList.add("cart__item__content");
                 
                      
                             let divContentDescription = document.createElement("div");
@@ -73,9 +75,9 @@ console.log(itemBackup);
                             divContent.appendChild(divSettings);
                             divSettings.classList.add("cart__item__content__settings");
                 
-                        // Quantité du produit
+                            // Quantité du produit
                 
-                        let divSettingsQuantity = document.createElement("div");
+                            let divSettingsQuantity = document.createElement("div");
                             divSettings.appendChild(divSettingsQuantity);
                             divSettingsQuantity.classList.add("cart__item__content__settings__quantity");
                     
@@ -93,11 +95,11 @@ console.log(itemBackup);
                             quantityInput.max = 100;
                             quantityInput.value = articleQuantity;
                 
-                        // Bouton Supprimer du produit
-                
-                        let divDeletButton = document.createElement("div");
-                        divSettings.appendChild(divDeletButton);
-                        divDeletButton.classList.add("cart__item__content__settings__delete");
+                            // Bouton Supprimer du produit
+                    
+                            let divDeletButton = document.createElement("div");
+                            divSettings.appendChild(divDeletButton);
+                            divDeletButton.classList.add("cart__item__content__settings__delete");
                     
                             let deletButtonParagraph = document.createElement("p");
                             divDeletButton.appendChild(deletButtonParagraph);
@@ -108,27 +110,35 @@ console.log(itemBackup);
 
 /////////////////////////////////////////////////// FONCTIONS AUTRES ///////////////////////////////////////////////////////////////
 
+                                // modification quantitée 
+                                const changeQuantity = document.querySelectorAll(".itemQuantity");
+                                changeQuantity.forEach(chngBar => {
 
-                            // suppression d'Item
+                                    chngBar.addEventListener("change", (e) => {
+                                        const getRootChange = e.target.closest("article");
+                                        for (const product of itemBackup) {
+                                            if ( product._id == getRootChange.dataset.id && product.color == getRootChange.dataset.color) {
+                                                product.quantity = e.target.value;
+                                                localStorage.setItem("itemInCart", JSON.stringify(itemBackup));
+                                                totalQuantityCart();
+                                                totalPrice();
+                                            }
+                                        }
+                                    })
+                                })
 
-                               
+                                // suppression d'Item
                                 const suppressButtons = document.querySelectorAll(".deleteItem");
-                                suppressButtons.forEach((button, i) => {
-                                    console.log(itemBackup[i].color);
-                                if (
-                                    itemBackup.find(
-                                    (item) =>
-                                        item.color === itemBackup[i].color && item._id === itemBackup[i]._id
-                                        
-                                    )
-                                   
-                                )  
-                                {
-                                    button.addEventListener("click", () => {
-                                        itemBackup = itemBackup.filter(el => el._id !== itemBackup[i]._id && el.color !== itemBackup[i].color);
-                                    updateCart(itemBackup);
+                                suppressButtons.forEach(btn => {                    
+                                  
+                                    btn.addEventListener("click", (e) => {                                  
+                                        const getRoot = e.target.closest("article");   
+                                        itemBackup = itemBackup.filter((e) => e._id !== getRoot.dataset.id && e.color !== getRoot.dataset.color);
+                                        updateCart(itemBackup);
+                                        getRoot.remove();
+                                        totalQuantityCart();
+                                        totalPrice();
                                     });
-                                }
                                 });
                             
                                     // affichage quantité dans le panier 
@@ -137,11 +147,11 @@ console.log(itemBackup);
                             function totalQuantityCart () {
                                 let result = 0;
                                 for (const itemObject of itemBackup) {
-                                    result += itemObject.quantity;
+                                    result += +itemObject.quantity;
                                 }
                                 let totalQuantity = document.querySelector("#totalQuantity")
                                 totalQuantity.innerText = result;
-                                }
+                            }
                                     // affichage prix dans le panier
                                 totalPrice();
     
@@ -155,14 +165,13 @@ console.log(itemBackup);
                                     shownPrice.textContent = result;
                                     
                                 }
-                    });
+                        });
                 
-            }
+                }
             
                 return itemObject;
-            })
-                    
-        } else {
+        })  
+    } else {
 
         let masterSectionError = document.getElementById("cart__items")
 
@@ -173,15 +182,13 @@ console.log(itemBackup);
         divErrorMessage.style.flexDirection ="center";
         divErrorMessage.style.justifyContent ="center";
 
-        alert("Aucun produit n'est présent dans le panier");
     };
 
     // mise a jour du panier 
     function updateCart(itemBackup) {
         if (itemBackup.length === 0) {
-          localStorage.removeItem("itemInCart");
+            localStorage.removeItem("itemInCart");
         } else {
-          localStorage.setItem("itemInCart", JSON.stringify(itemBackup));
+            localStorage.setItem("itemInCart", JSON.stringify(itemBackup));
         }
-        location.reload();
-      }
+    }    
