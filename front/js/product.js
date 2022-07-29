@@ -1,10 +1,8 @@
 // récupération de l'id depuis le liens
 let idItems = window.location.search.split("?id=").join("");
- 
 // récupération produit
  fetch(`http://localhost:3000/api/products/${idItems}`)
         .then(res => res.json())
-
         // Message Erreur
         .catch((err) => {
             let itemsContainer = document.querySelector(".items");
@@ -12,14 +10,12 @@ let idItems = window.location.search.split("?id=").join("");
             "Les items n'ont pas pu être chargés correctement";
             console.log(err);
         })
-
         // Ajout produits 
         .then(function (itemAPI) {
             product = itemAPI;
             
             // Récupération element HTML 
             let productDivImage = document.querySelector("div.item__img");
-
             let productName = document.querySelector("#title");
             let productDescription = document.querySelector("#description");
             let productPrice = document.querySelector("#price");
@@ -32,12 +28,10 @@ let idItems = window.location.search.split("?id=").join("");
             // image
             let productImage = document.createElement("img");
             productDivImage.appendChild(productImage);
-
             productImage.src = product.imageUrl;
             productImage.alt = product.altTxt;
-
             // option 
-                     let colorSlide = document.getElementById('colors'); 
+                    let colorSlide = document.getElementById('colors'); 
                     for (let i = 0; i < product.colors.length; i++) {
 
                         let colorSelection = document.createElement("option");
@@ -46,8 +40,7 @@ let idItems = window.location.search.split("?id=").join("");
                         colorSlide.append(colorSelection);
                     
                     };
-                });
-
+        });
 AddToCart();
     function AddToCart () {
     // Boutton ajouter au panier 
@@ -59,25 +52,20 @@ AddToCart();
         // definitions des objets 
         let quantityPick = document.querySelector("#quantity");
         let ColorPick = document.querySelector("#colors");
-
         let quantity = +quantityPick.value;
         let _id = idItems;
         let color = ColorPick.value;
 
         // condition : vérifications des champs bien rentrés
         if (quantityPick.value > 0 && quantityPick.value <100 && ColorPick.value !=0) {
-
             // condition : présence dans le panier 
                 if (localStorage.getItem("itemInCart")) {
-
                     // récupèration du panier 
                     let arrayItems = getCart ();
-
                     // vérification présence d'item
                 const productFinded = arrayItems.find(
                     (el) => el._id === idItems && el.color === color
-                    );
-                
+                );
                     // condition : si l'objet est trouvé 
                     if (productFinded) {
                         // definition de la variable de la nouvelle quantitée
@@ -99,25 +87,22 @@ AddToCart();
                                 _id
                             };
                                 // intégration de la boite dans le LS
-
                                 arrayItems.push(boxProduct);
                                 let storedProduct = JSON.stringify(arrayItems);
                                 localStorage.setItem("itemInCart", storedProduct);
                     };
                 // condition: non présence dans le panier
                 } else {
-
                     let arrayItems = [];
 
                      // definitions des objets 
                     let quantityPick = document.querySelector("#quantity");
                     let ColorPick = document.querySelector("#colors");
-
                     let _id = idItems;
                     let color = ColorPick.value;
-        
-                    let boxProduct = {
     
+                    let boxProduct = {
+
                         quantity : parseFloat(quantityPick.value),
                         color,               
                         _id
@@ -125,11 +110,9 @@ AddToCart();
                     // intégration de la boite dans le LS
 
                     arrayItems.push(boxProduct);
-
                     let storedProduct = JSON.stringify(arrayItems);
                     localStorage.setItem("itemInCart", storedProduct);  
                 }
-
                 // transport vers la page panier
                 cartLink();
                 function cartLink(){
@@ -145,6 +128,5 @@ function getCart() {
     if (localStorage.getItem("itemInCart")) {
         cart = JSON.parse(localStorage.getItem("itemInCart"));
     };
-
 return cart;
 };

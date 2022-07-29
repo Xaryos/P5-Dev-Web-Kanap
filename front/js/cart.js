@@ -2,29 +2,18 @@
     let itemBackup = JSON.parse(localStorage.getItem("itemInCart"));
 
 console.log(itemBackup);
-
 // Ajout des produits
     // condition de vérification de panier
     if (itemBackup) {  
-        
-             
-
         itemBackup.map((itemObject) => {
-                
-
-            
-
             const articleId = itemObject._id;
             const articleColor = itemObject.color;
-            const articleQuantity = itemObject.quantity;
-            
-            
+            const articleQuantity = itemObject.quantity;  
                 addItems();
                 function addItems () {
 
                     fetch(`http://localhost:3000/api/products/${articleId}`)
-                        .then(function(res){return res.json()})
-                        
+                        .then(function(res){return res.json()})  
                         .then(function (dataProduct) {
                             product = dataProduct;
                             // récupération de la section pour introduire les elements
@@ -48,12 +37,10 @@ console.log(itemBackup);
                             productImage.alt = product.altTxt;
                         
                             // Contenu du produit
-                    
                             let divContent = document.createElement("div");
                             productArticle.appendChild(divContent);
                             divContent.classList.add("cart__item__content");
                 
-                     
                             let divContentDescription = document.createElement("div");
                             divContent.appendChild(divContentDescription);
                             divContentDescription.classList.add("cart__item__content__description");
@@ -76,7 +63,6 @@ console.log(itemBackup);
                             divSettings.classList.add("cart__item__content__settings");
                 
                             // Quantité du produit
-                
                             let divSettingsQuantity = document.createElement("div");
                             divSettings.appendChild(divSettingsQuantity);
                             divSettingsQuantity.classList.add("cart__item__content__settings__quantity");
@@ -96,7 +82,6 @@ console.log(itemBackup);
                             quantityInput.value = articleQuantity;
                 
                             // Bouton Supprimer du produit
-                    
                             let divDeletButton = document.createElement("div");
                             divSettings.appendChild(divDeletButton);
                             divDeletButton.classList.add("cart__item__content__settings__delete");
@@ -105,8 +90,6 @@ console.log(itemBackup);
                             divDeletButton.appendChild(deletButtonParagraph);
                             deletButtonParagraph.classList.add("deleteItem");
                             deletButtonParagraph.innerHTML = "Supprimer";
-
-
 
 /////////////////////////////////////////////////// FONCTIONS AUTRES ///////////////////////////////////////////////////////////////
 
@@ -126,7 +109,6 @@ console.log(itemBackup);
                                         }
                                     })
                                 })
-
                                 // suppression d'Item
                                 const suppressButtons = document.querySelectorAll(".deleteItem");
                                 suppressButtons.forEach(btn => {                    
@@ -140,7 +122,6 @@ console.log(itemBackup);
                                         totalPrice();
                                     });
                                 });
-                            
                                     // affichage quantité dans le panier 
                             totalQuantityCart();
 
@@ -159,16 +140,12 @@ console.log(itemBackup);
                                     let result = 0;
                                     let shownPrice = document.querySelector("#totalPrice");
                                     for (const itemObject of itemBackup) {
-                                        result += itemObject.quantity * product.price;
-                                        
+                                        result += itemObject.quantity * product.price;  
                                     }
-                                    shownPrice.textContent = result;
-                                    
+                                    shownPrice.textContent = result; 
                                 }
                         });
-                
                 }
-            
                 return itemObject;
         })  
     } else {
@@ -183,7 +160,6 @@ console.log(itemBackup);
         divErrorMessage.style.justifyContent ="center";
 
     };
-
     // mise a jour du panier 
     function updateCart(itemBackup) {
         if (itemBackup.length === 0) {
@@ -192,3 +168,15 @@ console.log(itemBackup);
             localStorage.setItem("itemInCart", JSON.stringify(itemBackup));
         }
     }    
+
+////////////////////////////////////////////// FORMULAIRE /////////////////////////////////////////
+// definition des champs
+
+const firstNamePath = document.getElementById("firstName");
+const lastNamePath = document.getElementById("lastName");
+const addressPath = document.getElementById("address");
+const cityPath = document.getElementById("city");
+const emailPath = document.getElementById("email");
+const orderButton = document.getElementById("order");
+
+
