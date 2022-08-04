@@ -180,7 +180,7 @@ let formOrderListener = () => {
         let form = e.target.closest('form').elements
 
         // regex List 
-        let regEmail = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/; 
+        let regEmail = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
         let regName = /^[a-zA-ZZÀ-ÿ' -]+$/i;
         let regAddress = /^[A-Za-z0-9\é\è\ê\ë\ä\à\ï\ç\ \,\'\-]+$/;
         let regCity = /^[a-zA-ZÀ-ÿ' -]+$/;
